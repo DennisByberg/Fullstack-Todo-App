@@ -1,4 +1,4 @@
-﻿namespace Backend.Models.Enteties
+﻿namespace Backend.Models.Entities
 {
     public class Todo
     {
