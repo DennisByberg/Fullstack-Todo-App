@@ -1,9 +1,12 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { Box, IconButton, List, ListItem, ListItemText } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import deleteTodo from '../api/deleteTodo';
 import getAllTodos from '../api/getAllTodos';
+import AddTodoDialog from '../components/Buttons/AddTodoDialog';
+import DefaultIconButton from '../components/Buttons/DefaultIconButton';
 import DialogPopup from '../components/DialogPopup';
 import PageHeading from '../components/PageHeading';
 import { listItemSX, listItemTextSX } from '../styles/homePageSX';
@@ -12,6 +15,7 @@ import { ITodo } from '../types/globalInterfaces';
 function HomePage() {
   const [todos, setTodos] = useState<ITodo[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<ITodo | null>(null);
 
   useEffect(() => {
@@ -46,6 +50,12 @@ function HomePage() {
   return (
     <React.Fragment>
       <PageHeading>Home</PageHeading>
+      <DefaultIconButton
+        color="default"
+        icon={<PlaylistAddIcon />}
+        onClick={() => setIsAddDialogOpen(true)}
+        ariaLabel="Add Todo"
+      />
       <List sx={{ mb: 4 }}>
         {todos.map((todo) => (
           <ListItem
@@ -82,6 +92,12 @@ function HomePage() {
         open={isDialogOpen}
         setOpen={setIsDialogOpen}
         onConfirm={handleDeleteSelectedTodo}
+      />
+      <AddTodoDialog
+        isAddDialogOpen={isAddDialogOpen}
+        setIsAddDialogOpen={setIsAddDialogOpen}
+        todos={todos}
+        setTodos={setTodos}
       />
     </React.Fragment>
   );
